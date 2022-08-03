@@ -7,8 +7,9 @@ data = [
 ]
 #Organizacion de los componentes de la ventana
 left_layout = [
-    [sg.Push(), sg.Text('Actividad'), sg.Input(key='-Task-', size = (20, 1))],
-    [sg.Push(), sg.Text('Descripcion'), sg.Input(key='-Desc-', size = (20, 1))]
+    [sg.Text('Actividad'), sg.Push(),sg.Input(key='-Task-', size = (30, 1))],
+    [sg.Text('Descripcion'), sg.Push(), sg.Input(key='-Desc-', size = (30, 1))],
+    [sg.CalendarButton('Fecha', key = '-Date-'), sg.Push(), sg.In('', size = (30, 1))]
 ]
 
 right_part = [ 
@@ -19,7 +20,6 @@ layout = [
     [sg.Column(left_layout, vertical_alignment = 'top'), 
         sg.VerticalSeparator(), 
         sg.Column(right_part, vertical_alignment = 'top')],
-    [sg.Ok()]
 ]      
 
 # Instanciando la ventana 
