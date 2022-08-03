@@ -1,19 +1,19 @@
 import PySimpleGUI as sg      
 
 #Datos de prueba
-headings = ['1', '2']
 data = [ 
-    ['ID', 'Actividad']
+    ['Actividad']
 ]
 #Organizacion de los componentes de la ventana
 left_layout = [
     [sg.Text('Actividad'), sg.Push(),sg.Input(key='-Task-', size = (30, 1))],
     [sg.Text('Descripcion'), sg.Push(), sg.Input(key='-Desc-', size = (30, 1))],
-    [sg.CalendarButton('Fecha', key = '-Date-'), sg.Push(), sg.In('', size = (30, 1))]
+    [sg.CalendarButton('Fecha', format='%d-%m-%Y'), sg.Push(), sg.In('', key = '-Date-', size = (30, 1))],
+    [sg.Submit()]
 ]
 
 right_part = [ 
-    [sg.Table(values=data, auto_size_columns = False, col_widths = (8, 15), justification = 'center')]    
+    [sg.Table(values=data, auto_size_columns = False, def_col_width = 30, justification = 'center')]    
 ]
 
 layout = [
@@ -30,6 +30,9 @@ while True:
     event, values = window.read()
     if event == sg.WIN_CLOSED or event == 'Exit': 
         break 
+    if event == 'Submit':
+        userinput = [values['-Task-'], values['-Desc-'], values['-Date-']]
+        print(userinput)
 
 #Se cierra la ventana 
 window.close()
