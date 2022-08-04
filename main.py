@@ -5,11 +5,9 @@ import categoria_model
 #_categorias = categoria_model.Read_Categoria()
 #print(_categorias[0][1])
 a_data = [ 
-    ['Actividad']
+    [1, 'Actividad']
 ]
-c_data = [
-    ['Categoria']
-]
+c_data = categoria_model.Read_Categoria()
 #Organizacion de los componentes de la ventana
 A_left_layout = [
     [sg.Text('Actividad'), sg.Push(),sg.Input(key='-Task-', size = (30, 1))],
@@ -18,9 +16,8 @@ A_left_layout = [
     #[sg.Combo(_categorias[0][1], key='-Combo-')]
     [sg.Submit()]
 ]
-
 A_right_layout = [ 
-    [sg.Table(values=a_data, auto_size_columns = False, def_col_width = 30, justification = 'center')]    
+    [sg.Table(values = a_data, headings = ['Id', 'Actividad'] ,auto_size_columns = False, col_widths= (8, 30), justification = 'center')]    
 ]
 Actividad_layout = [
     [sg.Column(A_left_layout, vertical_alignment = 'top'),
@@ -32,7 +29,7 @@ C_left_layout = [
     [sg.Ok('Guardar')]
 ]
 C_right_layout = [
-    [sg.Table(values=c_data, auto_size_columns = False, def_col_width = 30, justification = 'center')]    
+    [sg.Table(values = c_data, headings = ['Id', 'Categoria'],auto_size_columns = False, col_widths = (8, 30), justification = 'center')]    
 ]
 Categoria_layout = [
     [sg.Column(C_left_layout, vertical_alignment = 'top'),
