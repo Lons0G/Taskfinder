@@ -16,33 +16,43 @@ def Insert_Categoria(Nombre):
 # Captura de Categoria
 def Read_Categoria():
     result = []
-    conection = sqlite3.connect('taskfinder.db')
-    data = conection.execute('''
-        SELECT * FROM Categoria
-    ''')
-    for row in data:
-        result.append(list(row))
-    conection.commit()
-    conection.close()
-    
-    return result
-
+    try:
+        conection = sqlite3.connect('taskfinder.db')
+        data = conection.execute('''
+            SELECT * FROM Categoria
+        ''')
+        for row in data:
+            result.append(list(row))
+        conection.commit()
+    except Exception as error:
+        print("Error es: " + str(error))
+    finally:
+        conection.close()
+        return result
+        
 # Actualizacion de la Categoria :Parametros (Id, Nombre)
 def Update_Categoria(Id, Nombre):
-    data = (Id, Nombre)
-    conection = sqlite3.connect('taskfinder.db')
-    query = ('''
-        UPDATE Categoria SET Id = ?, Nombre = ? WHERE Id = ?
-    ''')
-    conection.execute(query, data)
-    conection.commit()
-    conection.close()
+    try:
+        conection = sqlite3.connect('taskfinder.db')
+        query = f"UPDATE Categoria SET Nombre = '{Nombre}' WHERE Id = '{Id}'"
+        conection.execute(query)
+        conection.commit()
+        print('Se modifico Correctamente')
+    except Exception as error:
+        print('Error es :' + str(error))
+    finally:
+        conection.close()
 
 # Eliminacion de Categoria :Parametros (Id)
-def Delete_Categoira(Id):
-    conection = sqlite3.connect('taskfinder.db')
-    conection.execute('''
-        DELETE Categoria WHERE Id = ? 
-    ''', Id)
-    conection.commit()
-    conection.close()
+def Delete_Categoria(Id):
+    try:
+        conection = sqlite3.connect('taskfinder.db')
+        query = f"DELETE FROM Categoria WHERE Id = '{Id}';"
+        conection.execute(query)
+        conection.commit()
+        print('Se elimino Correctamente')
+    except Exception as error:
+        print('Error es: ' + str(error))
+    finally:
+        conection.close()
+
