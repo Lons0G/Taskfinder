@@ -2,11 +2,16 @@ import sqlite3
 
 # Insercion de Categoria :Parametros (Nombre)
 def Insert_Categoria(Nombre):
-    conection = sqlite3.connect('taskfinder.db')
-    conection.execute('''
-        INSERT INTO Categoria (Nombre) \ VALUES (?)''', Nombre)
-    conection.commit()
-    conection.close()
+    try:
+        conection = sqlite3.connect('taskfinder.db')
+        query = f"INSERT INTO Categoria (Nombre) VALUES('{Nombre}');" 
+        conection.execute(query)
+        conection.commit()
+        print('Se guardo Correctamente')
+    except Exception as error:
+        print('Error es: ' + str(error))
+    finally:
+        conection.close()
 
 # Captura de Categoria
 def Read_Categoria():
@@ -41,4 +46,3 @@ def Delete_Categoira(Id):
     ''', Id)
     conection.commit()
     conection.close()
-
