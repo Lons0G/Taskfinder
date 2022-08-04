@@ -24,3 +24,4 @@ query = ('''
 ''')
 conection.execute(query)
 conection.close()
+    
