@@ -2,18 +2,20 @@ import PySimpleGUI as sg
 import categoria_model 
 
 #Datos de prueba
-#_categorias = categoria_model.Read_Categoria()
-#print(_categorias[0][1])
+c_data = categoria_model.Read_Categoria()
+categorias = []
+for i, cat in c_data:
+    categorias.append(cat)
 a_data = [ 
     [1, 'Actividad']
 ]
-c_data = categoria_model.Read_Categoria()
+
 #Organizacion de los componentes de la ventana
 A_left_layout = [
     [sg.Text('Actividad'), sg.Push(),sg.Input(key='-Task-', size = (30, 1))],
     [sg.Text('Descripcion'), sg.Push(), sg.Input(key='-Desc-', size = (30, 1))],
     [sg.CalendarButton('Fecha', format='%d-%m-%Y'), sg.Push(), sg.In('', key = '-Date-', size = (30, 1))],
-    #[sg.Combo(_categorias[0][1], key='-Combo-')]
+    [sg.Combo(categorias, key = '-Combo-', default_value = categorias[0])],
     [sg.Submit()]
 ]
 A_right_layout = [ 
@@ -29,7 +31,7 @@ C_left_layout = [
     [sg.Ok('Guardar')]
 ]
 C_right_layout = [
-    [sg.Table(values = c_data, headings = ['Id', 'Categoria'],auto_size_columns = False, col_widths = (8, 30), justification = 'center')]    
+    [sg.Table(values = c_data, headings = ['Id', 'Categoria'],auto_size_columns = False, col_widths = (8, 30), justification = 'center', key = '-Cat-')]    
 ]
 Categoria_layout = [
     [sg.Column(C_left_layout, vertical_alignment = 'top'),
@@ -62,6 +64,12 @@ while True:
         print(userinput)
     if event == 'Guardar':
         categoria_model.Insert_Categoria(values['-Categoria-'])
+        c_data = categoria_model.Read_Categoria()
+        window.Element('-Cat-').update(c_data)
+        categorias.clear()
+        for i, cat in c_data:
+            categorias.append(cat)
+        window.Element('-Combo-').update(values = categorias)
 
 #Se cierra la ventana 
 window.close()
