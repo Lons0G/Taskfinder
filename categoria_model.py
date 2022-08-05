@@ -55,4 +55,3 @@ def Delete_Categoria(Id):
         print('Error es: ' + str(error))
     finally:
         conection.close()
-

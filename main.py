@@ -2,10 +2,15 @@ import PySimpleGUI as sg
 import categoria_model 
 
 #Datos de prueba
+def get_categorias():
+    data = categoria_model.Read_Categoria()
+    categorias = []
+    for i, cat in data:
+        categorias.append(cat)
+    return categorias
+
 c_data = categoria_model.Read_Categoria()
-categorias = []
-for i, cat in c_data:
-    categorias.append(cat)
+_categorias = get_categorias()
 a_data = [ 
     [1, 'Actividad']
 ]
@@ -13,9 +18,10 @@ a_data = [
 #Organizacion de los componentes de la ventana
 A_left_layout = [
     [sg.Text('Actividad'), sg.Push(),sg.Input(key='-Task-', size = (30, 1))],
-    [sg.Text('Descripcion'), sg.Push(), sg.Input(key='-Desc-', size = (30, 1))],
+    [sg.Text('Descripcion'), sg.Push(), sg.Multiline('', size = (30, 3), key = '-Desc-', no_scrollbar = True)],
     [sg.CalendarButton('Fecha', format='%d-%m-%Y'), sg.Push(), sg.In('', key = '-Date-', size = (30, 1))],
-    [sg.Combo(categorias, key = '-Combo-', default_value = categorias[0])],
+    [sg.Text('Hora'), sg.Push(), sg.In('', key = '-Time-', size = (30, 1))],
+    [sg.Text('Categoria'), sg.Push(), sg.Combo(_categorias, key = '-Combo-', default_value = _categorias[0])],
     [sg.Submit()]
 ]
 A_right_layout = [ 
@@ -66,10 +72,7 @@ while True:
         categoria_model.Insert_Categoria(values['-Categoria-'])
         c_data = categoria_model.Read_Categoria()
         window.Element('-Cat-').update(c_data)
-        categorias.clear()
-        for i, cat in c_data:
-            categorias.append(cat)
-        window.Element('-Combo-').update(values = categorias)
+        window.Element('-Combo-').update(values = get_categorias())
 
 #Se cierra la ventana 
 window.close()

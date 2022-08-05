@@ -18,10 +18,10 @@ query = ('''
         Descripcion TEXT,
         Fecha TEXT NOT NULL,
         Hora TEXT,
-        IdCategoria INTEGER NOT NULL,
-        FOREIGN KEY(IdCategoria) REFERENCES Categoria(Id)
+        Categoria TEXT NOT NULL,
+        FOREIGN KEY(Categoria) REFERENCES Categoria(Nombre)
     );
 ''')
 conection.execute(query)
 conection.close()
-    
+ 
