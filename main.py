@@ -1,5 +1,6 @@
 import PySimpleGUI as sg      
 import categoria_model 
+import actividad_model
 
 #Datos de prueba
 def get_categorias():
@@ -11,10 +12,7 @@ def get_categorias():
 
 c_data = categoria_model.Read_Categoria()
 _categorias = get_categorias()
-a_data = [ 
-    [1, 'Actividad']
-]
-
+a_data = actividad_model.Read_Actividad()  
 #Organizacion de los componentes de la ventana
 A_left_layout = [
     [sg.Text('Actividad'), sg.Push(),sg.Input(key='-Task-', size = (30, 1))],
@@ -25,7 +23,7 @@ A_left_layout = [
     [sg.Submit()]
 ]
 A_right_layout = [ 
-    [sg.Table(values = a_data, headings = ['Id', 'Actividad'] ,auto_size_columns = False, col_widths= (8, 30), justification = 'center')]    
+    [sg.Table(values = a_data, headings = ['Id', 'Actividad'] ,auto_size_columns = False, col_widths= (5, 30), justification = 'center')]    
 ]
 Actividad_layout = [
     [sg.Column(A_left_layout, vertical_alignment = 'top'),
@@ -37,7 +35,7 @@ C_left_layout = [
     [sg.Ok('Guardar')]
 ]
 C_right_layout = [
-    [sg.Table(values = c_data, headings = ['Id', 'Categoria'],auto_size_columns = False, col_widths = (8, 30), justification = 'center', key = '-Cat-')]    
+    [sg.Table(values = c_data, headings = ['Id', 'Categoria'],auto_size_columns = False, col_widths = (5, 30), justification = 'center', key = '-Cat-')]    
 ]
 Categoria_layout = [
     [sg.Column(C_left_layout, vertical_alignment = 'top'),
