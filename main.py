@@ -2,7 +2,7 @@ import PySimpleGUI as sg
 import categoria_model 
 import actividad_model
 
-#Datos de prueba
+#Obteniendo datos
 def get_categorias():
     data = categoria_model.Read_Categoria()
     categorias = []
@@ -13,6 +13,7 @@ def get_categorias():
 c_data = categoria_model.Read_Categoria()
 _categorias = get_categorias()
 a_data = actividad_model.Read_Actividad()  
+
 #Organizacion de los componentes de la ventana
 A_left_layout = [
     [sg.Text('Actividad'), sg.Push(),sg.Input(key='-Task-', size = (30, 1))],
@@ -23,7 +24,7 @@ A_left_layout = [
     [sg.Submit()]
 ]
 A_right_layout = [ 
-    [sg.Table(values = a_data, headings = ['Id', 'Actividad'] ,auto_size_columns = False, key = '-Table-', col_widths= (5, 30), justification = 'center')]    
+    [sg.Table(values = a_data, headings = ['Id', 'Actividad'] ,auto_size_columns = False, key='-Table-', col_widths= (5, 30), justification = 'center', enable_events = True)]    
 ]
 Actividad_layout = [
     [sg.Column(A_left_layout, vertical_alignment = 'top'),
@@ -44,10 +45,11 @@ Categoria_layout = [
 ]
 tabgroup = [
     [sg.TabGroup([[ 
-                     sg.Tab('Actividad', Actividad_layout),
-                     sg.Tab('Categoria', Categoria_layout)
+                     sg.Tab('Actividad', Actividad_layout, title_color = None, background_color = None),
+                     sg.Tab('Categoria', Categoria_layout, title_color = None, background_color = None)
                  ]],
-                    tab_location= 'left'
+                    tab_location= 'top',
+                    tab_background_color = 'steel blue'
                  )]
 ]
 
@@ -72,6 +74,8 @@ while True:
         c_data = categoria_model.Read_Categoria()
         window.Element('-Cat-').update(c_data)
         window.Element('-Combo-').update(values = get_categorias())
-
+    if event == '-Table-':
+        selected_row = values['-Table-'][0]
+        print(a_data[selected_row])
 #Se cierra la ventana 
 window.close()
