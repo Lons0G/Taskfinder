@@ -23,7 +23,7 @@ A_left_layout = [
     [sg.Submit()]
 ]
 A_right_layout = [ 
-    [sg.Table(values = a_data, headings = ['Id', 'Actividad'] ,auto_size_columns = False, col_widths= (5, 30), justification = 'center')]    
+    [sg.Table(values = a_data, headings = ['Id', 'Actividad'] ,auto_size_columns = False, key = '-Table-', col_widths= (5, 30), justification = 'center')]    
 ]
 Actividad_layout = [
     [sg.Column(A_left_layout, vertical_alignment = 'top'),
@@ -64,8 +64,9 @@ while True:
     if event == sg.WIN_CLOSED or event == 'Exit': 
         break 
     if event == 'Submit':
-        userinput = [values['-Task-'], values['-Desc-'], values['-Date-']]
-        print(userinput)
+        actividad_model.Insert_Actividad(values['-Task-'], values['-Desc-'], values['-Date-'], values['-Time-'], values['-Combo-'])
+        a_data = actividad_model.Read_Actividad()
+        window.Element('-Table-').update(a_data)
     if event == 'Guardar':
         categoria_model.Insert_Categoria(values['-Categoria-'])
         c_data = categoria_model.Read_Categoria()

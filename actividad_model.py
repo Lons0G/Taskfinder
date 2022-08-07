@@ -29,11 +29,11 @@ def Read_Actividad():
 
 # Actualizacion de la Actividad :Parametros (Id, Nombre, Descripcion, Fecha, Hora, IdCategoria)
 def Update_Actividad(Id, Nombre, Descripcion, Fecha, Hora, Categoria):
-    data = (Id, Nombre, Descripcion, Fecha, Hora, Categoria)
+    data = (Nombre, Descripcion, Fecha, Hora, Categoria, Id)
     try:
         conection = sqlite3.connect('taskfinder.db')
         query = ('''
-            UPDATE Actividad SET Nombre = ?, Descripcion = ?, Fecha = ?, Hora = ?, IdCategoria = ? WHERE Id = ?
+            UPDATE Actividad SET Nombre = ?, Descripcion = ?, Fecha = ?, Hora = ?, Categoria = ? WHERE Id = ?
         ''')
         conection.execute(query, data)
         conection.commit()
@@ -47,11 +47,10 @@ def Update_Actividad(Id, Nombre, Descripcion, Fecha, Hora, Categoria):
 def Delete_Actividad(Id):
     try:
         conection = sqlite3.connect('taskfinder.db')
-        conection.execute('''
-            DELETE Activdad WHERE Id = ? 
-        ''', Id)
+        query = f"DELETE FROM Actividad WHERE Id = '{Id}';"
+        conection.execute(query)
         conection.commit()
-        print('Se elimino correctamente')
+        print('Se elimino Correctamente')
     except Exception as error:
         print('Error es: ' + str(error))
     finally:
