@@ -30,4 +30,7 @@ def View_Task(actividad):
             break
         if event == 'Actualizar':
             actividad_model.Update_Actividad(actividad[0], values['-Task-'], values['-Desc-'], values['-Date-'], values['-Time-'], values['-Combo-'])
-    task_window.Close()
+        if event == 'Eliminar':
+            actividad_model.Delete_Actividad(actividad[0])
+            task_window.Close()
+    task_window.Close()    

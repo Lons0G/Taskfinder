@@ -59,7 +59,7 @@ layout = [
 
 # Instanciando la ventana 
 window = sg.Window('Main', layout)    
-
+close = 0
 #Bucle de la ventana
 while True:
     event, values = window.read()
@@ -78,5 +78,6 @@ while True:
         selected_row = values['-Table-'][0]
         actividad = a_data[selected_row]
         taskviewer.View_Task(actividad)
+       
 #Se cierra la ventana 
 window.close()
