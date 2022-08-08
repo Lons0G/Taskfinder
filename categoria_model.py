@@ -34,7 +34,7 @@ def Read_Categoria():
 def Update_Categoria(Id, Nombre):
     try:
         conection = sqlite3.connect('taskfinder.db')
-        query = f"UPDATE Categoria SET Nombre = '{Nombre}' WHERE Id = '{Id}'"
+        query = f"UPDATE Categoria SET Nombre = '{Nombre}' WHERE Id = {Id}"
         conection.execute(query)
         conection.commit()
         print('Se modifico Correctamente')
@@ -55,3 +55,4 @@ def Delete_Categoria(Id):
         print('Error es: ' + str(error))
     finally:
         conection.close()
+
