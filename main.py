@@ -1,7 +1,7 @@
 import PySimpleGUI as sg      
 import categoria_model 
 import actividad_model
-
+import taskviewer
 #Obteniendo datos
 def get_categorias():
     data = categoria_model.Read_Categoria()
@@ -76,6 +76,7 @@ while True:
         window.Element('-Combo-').update(values = get_categorias())
     if event == '-Table-':
         selected_row = values['-Table-'][0]
-        print(a_data[selected_row])
+        actividad = a_data[selected_row]
+        taskviewer.View_Task(actividad)
 #Se cierra la ventana 
 window.close()
