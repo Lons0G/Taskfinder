@@ -59,25 +59,28 @@ layout = [
 
 # Instanciando la ventana 
 window = sg.Window('Main', layout)    
-close = 0
 #Bucle de la ventana
 while True:
     event, values = window.read()
     if event == sg.WIN_CLOSED or event == 'Exit': 
         break 
-    if event == 'Submit':
+    elif event == 'Submit':
         actividad_model.Insert_Actividad(values['-Task-'], values['-Desc-'], values['-Date-'], values['-Time-'], values['-Combo-'])
         a_data = actividad_model.Read_Actividad()
         window.Element('-Table-').update(a_data)
-    if event == 'Guardar':
+    elif event == 'Guardar':
         categoria_model.Insert_Categoria(values['-Categoria-'])
         c_data = categoria_model.Read_Categoria()
         window.Element('-Cat-').update(c_data)
         window.Element('-Combo-').update(values = get_categorias())
-    if event == '-Table-':
-        selected_row = values['-Table-'][0]
-        actividad = a_data[selected_row]
-        taskviewer.View_Task(actividad)
-       
+    elif event == '-Table-':
+        selected_row = values['-Table-']
+        if not selected_row:
+            print('vacio')
+        else:
+            actividad = a_data[selected_row[0]]
+            taskviewer.View_Task(actividad)
+            a_data = actividad_model.Read_Actividad()
+            window.Element('-Table-').update(a_data)
 #Se cierra la ventana 
 window.close()
