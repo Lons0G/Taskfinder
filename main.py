@@ -2,6 +2,7 @@ import PySimpleGUI as sg
 import categoria_model 
 import actividad_model
 import taskviewer
+
 #Obteniendo datos
 def get_categorias():
     data = categoria_model.Read_Categoria()
@@ -9,6 +10,12 @@ def get_categorias():
     for i, cat in data:
         categorias.append(cat)
     return categorias
+
+def Clear_campos():
+    window['-Task-']('')
+    window['-Desc-']('')
+    window['-Date-']('')
+    window['-Time-']('')
 
 c_data = categoria_model.Read_Categoria()
 _categorias = get_categorias()
@@ -68,6 +75,7 @@ while True:
         actividad_model.Insert_Actividad(values['-Task-'], values['-Desc-'], values['-Date-'], values['-Time-'], values['-Combo-'])
         a_data = actividad_model.Read_Actividad()
         window.Element('-Table-').update(a_data)
+        Clear_campos()
     elif event == 'Guardar':
         categoria_model.Insert_Categoria(values['-Categoria-'])
         c_data = categoria_model.Read_Categoria()
