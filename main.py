@@ -2,7 +2,7 @@ import PySimpleGUI as sg
 import categoria_model 
 import actividad_model
 import taskviewer
-
+import catviewer 
 #Obteniendo datos
 def get_categorias():
     data = categoria_model.Read_Categoria()
@@ -43,7 +43,7 @@ C_left_layout = [
     [sg.Ok('Guardar')]
 ]
 C_right_layout = [
-    [sg.Table(values = c_data, headings = ['Id', 'Categoria'],auto_size_columns = False, col_widths = (5, 30), justification = 'center', key = '-Cat-')]    
+    [sg.Table(values = c_data, headings = ['Id', 'Categoria'],auto_size_columns = False, col_widths = (5, 30), justification = 'center', key = '-Cat-', enable_events = True)]    
 ]
 Categoria_layout = [
     [sg.Column(C_left_layout, vertical_alignment = 'top'),
@@ -92,5 +92,17 @@ while True:
             taskviewer.View_Task(actividad)
             a_data = actividad_model.Read_Actividad()
             window.Element('-Table-').update(a_data)
+    elif event == '-Cat-':
+        selected_row = values['-Cat-']
+        if not selected_row:
+            print('vacio')
+        else:
+            categoria = c_data[selected_row[0]]
+            catviewer.View_Categoria(categoria)
+            _categorias = get_categorias()
+            c_data = categoria_model.Read_Categoria()
+            window.Element('-Cat-').update(c_data)
+            window.Element('-Combo-').update(values = _categorias)
+            window.Element('-Combo-').update(_categorias[0])
 #Se cierra la ventana 
 window.close()
