@@ -78,9 +78,11 @@ while True:
         Clear_campos()
     elif event == 'Guardar':
         categoria_model.Insert_Categoria(values['-Categoria-'])
+        _categorias = get_categorias()
         c_data = categoria_model.Read_Categoria()
         window.Element('-Cat-').update(c_data)
-        window.Element('-Combo-').update(values = get_categorias())
+        window.Element('-Combo-').update(values = _categorias)
+        window.Element('-Combo-').update(_categorias[0])
     elif event == '-Table-':
         selected_row = values['-Table-']
         if not selected_row:

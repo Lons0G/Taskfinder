@@ -10,9 +10,9 @@ def get_categorias():
     return categorias
 
 c_data = categoria_model.Read_Categoria()
-_categorias = get_categorias()
 
 def View_Task(actividad):
+    _categorias = get_categorias()
     layout = [
         [sg.Text('Actividad'), sg.Push(),sg.Input(actividad[1],key='-Task-', size = (30, 1))],
         [sg.Text('Descripcion'), sg.Push(), sg.Multiline(actividad[2], size = (30, 3), key = '-Desc-', no_scrollbar = True)],
