@@ -16,7 +16,16 @@ def Clear_campos():
     window['-Desc-']('')
     window['-Date-']('')
     window['-Time-']('')
-
+def Validate():
+    if values['-Task-'] == '' or values['-Date-'] == '' or values['-Time-'] == '':
+        return 0
+    else: 
+        return 1
+def Validate_c():
+    if values['-Categoria-'] == '':
+        return 0
+    else: 
+        return 1
 c_data = categoria_model.Read_Categoria()
 _categorias = get_categorias()
 a_data = actividad_model.Read_Actividad()  
@@ -72,17 +81,23 @@ while True:
     if event == sg.WIN_CLOSED or event == 'Exit': 
         break 
     elif event == 'Submit':
-        actividad_model.Insert_Actividad(values['-Task-'], values['-Desc-'], values['-Date-'], values['-Time-'], values['-Combo-'])
-        a_data = actividad_model.Read_Actividad()
-        window.Element('-Table-').update(a_data)
-        Clear_campos()
+        if Validate() == 1:
+            actividad_model.Insert_Actividad(values['-Task-'], values['-Desc-'], values['-Date-'], values['-Time-'], values['-Combo-'])
+            a_data = actividad_model.Read_Actividad()
+            window.Element('-Table-').update(a_data)
+            Clear_campos()
+        else:
+            print('Campos vacios')
     elif event == 'Guardar':
-        categoria_model.Insert_Categoria(values['-Categoria-'])
-        _categorias = get_categorias()
-        c_data = categoria_model.Read_Categoria()
-        window.Element('-Cat-').update(c_data)
-        window.Element('-Combo-').update(values = _categorias)
-        window.Element('-Combo-').update(_categorias[0])
+        if Validate_c() == 1:
+            categoria_model.Insert_Categoria(values['-Categoria-'])
+            _categorias = get_categorias()
+            c_data = categoria_model.Read_Categoria()
+            window.Element('-Cat-').update(c_data)
+            window.Element('-Combo-').update(values = _categorias)
+            window.Element('-Combo-').update(_categorias[0])
+        else:
+            print('campos vacios')
     elif event == '-Table-':
         selected_row = values['-Table-']
         if not selected_row:
