@@ -15,9 +15,10 @@ def Clear_campos():
     window['-Task-']('')
     window['-Desc-']('')
     window['-Date-']('')
-    window['-Time-']('')
+    window['-Hour-']('')
+    window['-Min-']('')
 def Validate():
-    if values['-Task-'] == '' or values['-Date-'] == '' or values['-Time-'] == '':
+    if values['-Task-'] == '' or values['-Date-'] == '' or values['-Hour-'] == '' or values['-Min-'] == '':
         return 0
     else: 
         return 1
@@ -35,7 +36,7 @@ A_left_layout = [
     [sg.Text('Actividad'), sg.Push(),sg.Input(key='-Task-', size = (30, 1))],
     [sg.Text('Descripcion'), sg.Push(), sg.Multiline('', size = (30, 3), key = '-Desc-', no_scrollbar = True)],
     [sg.CalendarButton('Fecha', format='%d-%m-%Y'), sg.Push(), sg.In('', key = '-Date-', size = (30, 1))],
-    [sg.Text('Hora'), sg.Push(), sg.In('', key = '-Time-', size = (30, 1))],
+    [sg.Push(), sg.Text('Hora'), sg.In('', key = '-Hour-', size = (5, 1)), sg.Text('Minutos'), sg.In('', key = '-Min-', size = (5, 1))],
     [sg.Text('Categoria'), sg.Push(), sg.Combo(_categorias, key = '-Combo-', default_value = _categorias[0])],
     [sg.Submit()]
 ]
@@ -82,7 +83,8 @@ while True:
         break 
     elif event == 'Submit':
         if Validate() == 1:
-            actividad_model.Insert_Actividad(values['-Task-'], values['-Desc-'], values['-Date-'], values['-Time-'], values['-Combo-'])
+            horario = f"{values['-Hour-']}:{values['-Min-']}:00"
+            actividad_model.Insert_Actividad(values['-Task-'], values['-Desc-'], values['-Date-'], horario, values['-Combo-'])
             a_data = actividad_model.Read_Actividad()
             window.Element('-Table-').update(a_data)
             Clear_campos()
