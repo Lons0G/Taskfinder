@@ -3,6 +3,11 @@ import categoria_model
 import actividad_model
 import taskviewer
 import catviewer 
+import database
+
+#La primera vez que se ejecute
+database.create_db()
+
 #Obteniendo datos
 def get_categorias():
     data = categoria_model.Read_Categoria()
@@ -88,8 +93,6 @@ while True:
             a_data = actividad_model.Read_Actividad()
             window.Element('-Table-').update(a_data)
             Clear_campos()
-        else:
-            print('Campos vacios')
     elif event == 'Guardar':
         if Validate_c() == 1:
             categoria_model.Insert_Categoria(values['-Categoria-'])
@@ -98,12 +101,10 @@ while True:
             window.Element('-Cat-').update(c_data)
             window.Element('-Combo-').update(values = _categorias)
             window.Element('-Combo-').update(_categorias[0])
-        else:
-            print('campos vacios')
     elif event == '-Table-':
         selected_row = values['-Table-']
         if not selected_row:
-            print('vacio')
+            pass 
         else:
             actividad = a_data[selected_row[0]]
             taskviewer.View_Task(actividad)
@@ -112,7 +113,7 @@ while True:
     elif event == '-Cat-':
         selected_row = values['-Cat-']
         if not selected_row:
-            print('vacio')
+            pass
         else:
             categoria = c_data[selected_row[0]]
             catviewer.View_Categoria(categoria)
@@ -121,5 +122,4 @@ while True:
             window.Element('-Cat-').update(c_data)
             window.Element('-Combo-').update(values = _categorias)
             window.Element('-Combo-').update(_categorias[0])
-#Se cierra la ventana 
-window.close()
+window.Close()
